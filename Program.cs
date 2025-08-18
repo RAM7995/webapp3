@@ -2,14 +2,12 @@ using Amazon.Lambda.AspNetCoreServer.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
+// Add services to the container
 builder.Services.AddRazorPages();
-
-// ✅ UseLambdaHosting makes it run on Lambda instead of Kestrel
-builder.Services.AddAWSLambdaHosting(LambdaEventSource.RestApi);
 
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
@@ -18,10 +16,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
 
-app.Run();
+// 👇 instead of app.Run(), hook into Lambda
+app.UseLambdaHosting(LambdaEventSource.RestApiGateway);
