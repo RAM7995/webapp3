@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.AspNetCoreServer.Hosting" Version="1.7.0" />
+    <PackageReference Include="SomeOtherPackage" Version="1.6.0" />
   </ItemGroup>
 
 </Project>
